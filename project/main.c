@@ -8,6 +8,7 @@ uint16_t LED_STATUS = OFF;
 uint16_t BEEP_STATUS = OFF;
 int main(void)
 {
+    imx6u_clk_init();
     clk_enable();
     led_init();
     beep_init();

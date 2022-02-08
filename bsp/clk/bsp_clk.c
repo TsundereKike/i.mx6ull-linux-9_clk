@@ -22,7 +22,7 @@ void imx6u_clk_init(void)
         CCM->CCSR &= ~(1<<8); /*配置step_clk时钟源为24MHz OSC*/
         CCM->CCSR |= (1<<2); /*配置pll_sw_clk时钟源为step_clk*/
     }
-    CCM_ANALOG->PLL_ARM = (1<<13) | ((88<<0) & 0x7f); /*设置pll_main_clk为1056MHz*/
+    CCM_ANALOG->PLL_ARM = (1<<13) | ((58<<0) & 0x7f); /*设置pll_main_clk为1056MHz*/
+    CCM->CACRR = 0x0; /*ARM内核时钟设置为pll_sw_clk时钟的2分频 = 1056MHz/2 = 528MHz*/
     CCM->CCSR &= ~(1<<2); /*配置pll_sw_clk时钟源为pll_main_clk*/
-    CCM->CACRR = 0x1; /*ARM内核时钟设置为pll_sw_clk时钟的2分频 = 1056MHz/2 = 528MHz*/
 }

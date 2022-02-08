@@ -1,14 +1,14 @@
 
-gpio.elf：     文件格式 elf32-littlearm
+clk.elf：     文件格式 elf32-littlearm
 
 
 Disassembly of section .text:
 
 87800000 <_bss_start>:
-87800000:	8780036c 	strhi	r0, [r0, ip, ror #6]
+87800000:	87800370 			; <UNDEFINED> instruction: 0x87800370
 
 87800004 <_bss_end>:
-87800004:	87800372 			; <UNDEFINED> instruction: 0x87800372
+87800004:	87800376 			; <UNDEFINED> instruction: 0x87800376
 
 87800008 <_start>:
 87800008:	e10f0000 	mrs	r0, CPSR
@@ -65,13 +65,13 @@ Disassembly of section .text:
 8780009e:	f44f 4380 	mov.w	r3, #16384	; 0x4000
 878000a2:	f2c0 230c 	movt	r3, #524	; 0x20c
 878000a6:	f2c0 220c 	movt	r2, #524	; 0x20c
-878000aa:	f242 0158 	movw	r1, #8280	; 0x2058
-878000ae:	6011      	str	r1, [r2, #0]
-878000b0:	2101      	movs	r1, #1
-878000b2:	68da      	ldr	r2, [r3, #12]
-878000b4:	f022 0204 	bic.w	r2, r2, #4
-878000b8:	60da      	str	r2, [r3, #12]
-878000ba:	6119      	str	r1, [r3, #16]
+878000aa:	f242 003a 	movw	r0, #8250	; 0x203a
+878000ae:	2100      	movs	r1, #0
+878000b0:	6010      	str	r0, [r2, #0]
+878000b2:	6119      	str	r1, [r3, #16]
+878000b4:	68da      	ldr	r2, [r3, #12]
+878000b6:	f022 0204 	bic.w	r2, r2, #4
+878000ba:	60da      	str	r2, [r3, #12]
 878000bc:	4770      	bx	lr
 878000be:	bf00      	nop
 
@@ -232,7 +232,7 @@ Disassembly of section .text:
 
 87800220 <get_key_value>:
 87800220:	b538      	push	{r3, r4, r5, lr}
-87800222:	f240 3468 	movw	r4, #872	; 0x368
+87800222:	f240 346c 	movw	r4, #876	; 0x36c
 87800226:	f2c8 7480 	movt	r4, #34688	; 0x8780
 8780022a:	7823      	ldrb	r3, [r4, #0]
 8780022c:	2b01      	cmp	r3, #1
@@ -329,62 +329,63 @@ Disassembly of section .text:
 Disassembly of section .text.startup:
 
 87800300 <main>:
-87800300:	f240 346c 	movw	r4, #876	; 0x36c
+87800300:	f240 3470 	movw	r4, #880	; 0x370
 87800304:	b508      	push	{r3, lr}
 87800306:	f2c8 7480 	movt	r4, #34688	; 0x8780
 8780030a:	2600      	movs	r6, #0
 8780030c:	4625      	mov	r5, r4
-8780030e:	f7ff fea5 	bl	8780005c <clk_enable>
-87800312:	f7ff fef3 	bl	878000fc <led_init>
-87800316:	f7ff ff2f 	bl	87800178 <beep_init>
-8780031a:	f7ff ff5d 	bl	878001d8 <key_init>
-8780031e:	e005      	b.n	8780032c <main+0x2c>
-87800320:	8823      	ldrh	r3, [r4, #0]
-87800322:	2b32      	cmp	r3, #50	; 0x32
-87800324:	d014      	beq.n	87800350 <main+0x50>
-87800326:	200a      	movs	r0, #10
-87800328:	f7ff fed4 	bl	878000d4 <delay_ms>
-8780032c:	8823      	ldrh	r3, [r4, #0]
-8780032e:	3301      	adds	r3, #1
-87800330:	8023      	strh	r3, [r4, #0]
-87800332:	f7ff ff75 	bl	87800220 <get_key_value>
-87800336:	2801      	cmp	r0, #1
-87800338:	d1f2      	bne.n	87800320 <main+0x20>
-8780033a:	886b      	ldrh	r3, [r5, #2]
-8780033c:	fab3 f383 	clz	r3, r3
-87800340:	095b      	lsrs	r3, r3, #5
-87800342:	4618      	mov	r0, r3
-87800344:	806b      	strh	r3, [r5, #2]
-87800346:	f7ff ff33 	bl	878001b0 <beep_switch>
-8780034a:	8823      	ldrh	r3, [r4, #0]
-8780034c:	2b32      	cmp	r3, #50	; 0x32
-8780034e:	d1ea      	bne.n	87800326 <main+0x26>
-87800350:	88ab      	ldrh	r3, [r5, #4]
-87800352:	2000      	movs	r0, #0
-87800354:	802e      	strh	r6, [r5, #0]
-87800356:	fab3 f383 	clz	r3, r3
-8780035a:	095b      	lsrs	r3, r3, #5
-8780035c:	4619      	mov	r1, r3
-8780035e:	80ab      	strh	r3, [r5, #4]
-87800360:	f7ff fef8 	bl	87800154 <led_switch>
-87800364:	e7df      	b.n	87800326 <main+0x26>
-87800366:	bf00      	nop
+8780030e:	f7ff feb5 	bl	8780007c <imx6u_clk_init>
+87800312:	f7ff fea3 	bl	8780005c <clk_enable>
+87800316:	f7ff fef1 	bl	878000fc <led_init>
+8780031a:	f7ff ff2d 	bl	87800178 <beep_init>
+8780031e:	f7ff ff5b 	bl	878001d8 <key_init>
+87800322:	e005      	b.n	87800330 <main+0x30>
+87800324:	8823      	ldrh	r3, [r4, #0]
+87800326:	2b32      	cmp	r3, #50	; 0x32
+87800328:	d014      	beq.n	87800354 <main+0x54>
+8780032a:	200a      	movs	r0, #10
+8780032c:	f7ff fed2 	bl	878000d4 <delay_ms>
+87800330:	8823      	ldrh	r3, [r4, #0]
+87800332:	3301      	adds	r3, #1
+87800334:	8023      	strh	r3, [r4, #0]
+87800336:	f7ff ff73 	bl	87800220 <get_key_value>
+8780033a:	2801      	cmp	r0, #1
+8780033c:	d1f2      	bne.n	87800324 <main+0x24>
+8780033e:	886b      	ldrh	r3, [r5, #2]
+87800340:	fab3 f383 	clz	r3, r3
+87800344:	095b      	lsrs	r3, r3, #5
+87800346:	4618      	mov	r0, r3
+87800348:	806b      	strh	r3, [r5, #2]
+8780034a:	f7ff ff31 	bl	878001b0 <beep_switch>
+8780034e:	8823      	ldrh	r3, [r4, #0]
+87800350:	2b32      	cmp	r3, #50	; 0x32
+87800352:	d1ea      	bne.n	8780032a <main+0x2a>
+87800354:	88ab      	ldrh	r3, [r5, #4]
+87800356:	2000      	movs	r0, #0
+87800358:	802e      	strh	r6, [r5, #0]
+8780035a:	fab3 f383 	clz	r3, r3
+8780035e:	095b      	lsrs	r3, r3, #5
+87800360:	4619      	mov	r1, r3
+87800362:	80ab      	strh	r3, [r5, #4]
+87800364:	f7ff fef6 	bl	87800154 <led_switch>
+87800368:	e7df      	b.n	8780032a <main+0x2a>
+8780036a:	bf00      	nop
 
 Disassembly of section .data:
 
-87800368 <key_release.7411>:
-87800368:	地址 0x0000000087800368 越界。
+8780036c <key_release.7411>:
+8780036c:	地址 0x000000008780036c 越界。
 
 
 Disassembly of section .bss:
 
-8780036c <__bss_start>:
+87800370 <__bss_start>:
 	...
 
-8780036e <BEEP_STATUS>:
+87800372 <BEEP_STATUS>:
 	...
 
-87800370 <LED_STATUS>:
+87800374 <LED_STATUS>:
 	...
 
 Disassembly of section .comment:

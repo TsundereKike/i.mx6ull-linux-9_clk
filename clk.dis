@@ -66,8 +66,8 @@ Disassembly of section .text:
 878000a0:	f44f 4380 	mov.w	r3, #16384	; 0x4000
 878000a4:	f2c0 230c 	movt	r3, #524	; 0x20c
 878000a8:	f2c0 220c 	movt	r2, #524	; 0x20c
-878000ac:	f242 003a 	movw	r0, #8250	; 0x203a
-878000b0:	2100      	movs	r1, #0
+878000ac:	f242 0058 	movw	r0, #8280	; 0x2058
+878000b0:	2101      	movs	r1, #1
 878000b2:	6010      	str	r0, [r2, #0]
 878000b4:	f241 041b 	movw	r4, #4123	; 0x101b
 878000b8:	6119      	str	r1, [r3, #16]
